@@ -1,12 +1,12 @@
 /* Client ID and API key from the Developer Console */
-var CLIENT_ID = '233676235337-e4k8et9oj9p8d4pq6i89kbiifn5hmqe3.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyAh7uT_LoX_U0LxWpEw0jGLCxTpUMQSIOs';
+const CLIENT_ID = '233676235337-e4k8et9oj9p8d4pq6i89kbiifn5hmqe3.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyAh7uT_LoX_U0LxWpEw0jGLCxTpUMQSIOs';
 
 /* Array of API discovery doc URLs for APIs used by the quickstart */
-var DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
+const DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
 
 /* Authorization scopes required by the API; multiple scopes can be included, separated by spaces. */
-var SCOPES = "https://www.googleapis.com/auth/drive.file";
+const SCOPES = "https://www.googleapis.com/auth/drive.file";
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 
@@ -27,7 +27,7 @@ function initClient() {
 		clientId: CLIENT_ID,
 		discoveryDocs: DISCOVERY_DOCS,
 		scope: SCOPES
-	}).then(function() {
+	}).then(() => {
 		/* Listen for sign-in state changes. */
 		gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 		/* Handle the initial sign-in state. */
@@ -84,11 +84,11 @@ function appendPre(message) {
 function printDocTitle() {
 	gapi.client.docs.documents.get({
 		documentId: '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE'
-	}).then(function(response) {
+	}).then(response => {
 		var doc = response.result;
 		var title = doc.title;
 		appendPre('Document "' + title + '" successfully found.\n');
-	}, function(response) {
+	}, response => {
 		appendPre('Error: ' + response.result.error.message);
 	});
 }
