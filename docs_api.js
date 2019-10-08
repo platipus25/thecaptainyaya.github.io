@@ -47,7 +47,7 @@ $(()=>{
 			/* Listen for sign-in state changes. */
 			gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 			/* Handle the initial sign-in state. */
-			updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+			updateSigninStatus();
 			authorizeButton.onclick = handleAuthClick;
 			signoutButton.onclick = handleSignoutClick;
 		});
@@ -56,8 +56,8 @@ $(()=>{
 	*  Called when the signed in status changes, to update the UI
 	*  appropriately. After a sign-in, the API is called.
 	*/
-	function updateSigninStatus(isSignedIn) {
-		if (isSignedIn) {
+	function updateSigninStatus() {
+		if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
 			authorizeButton.hide();
 			signoutButton.show();
 			textarea.show();
@@ -69,7 +69,8 @@ $(()=>{
 	}
 	
 	function submitCode() {
-		if (!isSignedIn) {
+		if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+			alert("Please sign in to use this API");
 			return;
 		}
 		let code = textarea.innerHTML;
