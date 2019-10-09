@@ -5,10 +5,7 @@ $(()=>{
 	const signoutButton = $('#signout_button');
 	const textarea = $('#textarea');
 	const submitButton = $('#submitCode');
-	
-	/* Array of API discovery doc URLs for APIs used by the quickstart */
-	var DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
-	
+		
 	/* Authorization scopes required by the API; multiple scopes can be included, separated by spaces. */
 	var authorizeButton = document.getElementById('authorize_button');
 	var signoutButton = document.getElementById('signout_button');
