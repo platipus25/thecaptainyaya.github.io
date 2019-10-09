@@ -1,4 +1,3 @@
-$(()=>{
 	/* Array of API discovery doc URLs for APIs used by the quickstart */
 	const DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
 	const authorizeButton = $('#authorize_button');
@@ -70,7 +69,6 @@ $(()=>{
 		textarea.innerHTML = "";
 		
 	}
-});
 	/**
 	* Prints the title of a sample doc:
 	* https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
