@@ -5,11 +5,7 @@ $(()=>{
 	const signoutButton = $('#signout_button');
 	const textarea = $('#textarea');
 	const submitButton = $('#submitCode');
-		
-	/* Authorization scopes required by the API; multiple scopes can be included, separated by spaces. */
-	var authorizeButton = document.getElementById('authorize_button');
-	var signoutButton = document.getElementById('signout_button');
-	
+			
 	/**
 	*  On load, called to load the auth2 library and API client library.
 	*/
