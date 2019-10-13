@@ -1,10 +1,10 @@
       // Array of API discovery doc URLs for APIs used by the quickstart
-      var DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
+      const DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var authorizeButton = document.getElementById('authorize_button');
-      var signoutButton = document.getElementById('signout_button');
+      const authorizeButton = document.getElementById('authorize_button');
+      const signoutButton = document.getElementById('signout_button');
 
       /**
        *  On load, called to load the auth2 library and API client library.
@@ -22,7 +22,7 @@
           apiKey: "AIzaSyAh7uT_LoX_U0LxWpEw0jGLCxTpUMQSIOs",
           clientId: "233676235337-e4k8et9oj9p8d4pq6i89kbiifn5hmqe3.apps.googleusercontent.com",
           discoveryDocs: DISCOVERY_DOCS,
-          scope: "https://www.googleapis.com/auth/drive.file"
+          scope: "https://www.googleapis.com/auth/documents.readonly https://www.googleapis.com/auth/drive.file"
         }).then(function() {
           // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
