@@ -124,8 +124,8 @@ function printDocTitle() {
 	gapi.client.docs.documents.create(googleDoc).then(function(response) {
 		let doc = response.result;
 		let title = doc.title;
-		appendPre('Created "' + title + '" successfully');
+		console.log("Successfully created " + doc.title + ".");
 	}, function(response) {
-		appendPre('Error: ' + response.result.error.message);
+		console.log('Error: ' + response.result.error.message);
 	});
 }
