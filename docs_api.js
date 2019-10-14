@@ -81,8 +81,8 @@ function createDoc() {
 	googleDoc.title = "Daily Log - " + Math.floor(today.getFullYear() / 100) + "." + (today.getMonth() + 1) + "." + today.getDate();
 	gapi.client.docs.documents.create(googleDoc).then(response => {
 		let googleDoc = response.result;
-		let title = googleDoc.title;
 		let updateRequest = {
+			documentId = "id",
 			"requests": [
 				{
 					"insertText": {
@@ -95,6 +95,7 @@ function createDoc() {
 				}
 			]
 		};
+		updateRequest.documentId = googleDoc.documentId;
 		gapi.client.docs.documents.batchUpdate(updateRequest);
 		console.log("Successfully created " + googleDoc.title + ".");
 	}, response => {
