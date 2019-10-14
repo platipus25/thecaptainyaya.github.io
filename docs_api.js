@@ -96,7 +96,7 @@ function createDoc() {
 		};
 		
 		// Sanatizes user input and adds it to the batch update
-		let input = "\n" + textarea.value.replace('"', '\\"').replace("'", "\\'").replace("\\", "\\\\");
+		let input = "\n" + textarea.value.replace("\\", "\\\\").replace('"', '\\"').replace("'", "\\'");
 		updateRequest.requests[0].insertText.text = input;
 		
 		// Batch updates
