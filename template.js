@@ -1,5 +1,5 @@
-// Template for the Google Doc, to be parsed as a JSON file
-const template = '{
+//Template for the Google Doc
+const template = {
   "title": "test1",
   "body": {
     "content": [
@@ -34,4 +34,4 @@ const template = '{
       }
     ]
   }
-}';
+};

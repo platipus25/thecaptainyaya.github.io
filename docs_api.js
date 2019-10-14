@@ -80,7 +80,7 @@ function appendPre(message) {
 */
 function printDocTitle() {
 	// Parses a variable from the template.js file
-	let googleDoc = JSON.parse(template);
+	let googleDoc = {...template};
 	googleDoc.body.content[1].elements[0].textRun.content = "hello world\n";
 	googleDoc.title = "test2";
 	gapi.client.docs.documents.create(googleDoc).then(function(response) {
