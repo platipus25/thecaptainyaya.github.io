@@ -97,7 +97,7 @@ function createDoc() {
 				}
 			]
 		};
-		gapi.client.docs.documents.batchUpdate(params, updateRequest);
+		let update = gapi.client.docs.documents.batchUpdate(params, updateRequest);
 		console.log("Successfully created " + googleDoc.title + ".");
 		console.log(googleDoc);
 		console.log(googleDoc.documentId);
