@@ -5,6 +5,44 @@ const DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'
 const authorizeButton = document.getElementById('authorize_button');
 const signoutButton = document.getElementById('signout_button');
 
+//Template for the Google Doc
+const template = {
+  "title": "test1",
+  "body": {
+    "content": [
+      {
+        "endIndex": 1,
+        "sectionBreak": {
+          "sectionStyle": {
+            "columnSeparatorStyle": "NONE",
+            "contentDirection": "LEFT_TO_RIGHT"
+          }
+        }
+      },
+      {
+        "startIndex": 1,
+        "endIndex": 2,
+        "paragraph": {
+          "elements": [
+            {
+              "startIndex": 1,
+              "endIndex": 2,
+              "textRun": {
+                "content": "\n",
+                "textStyle": {}
+              }
+            }
+          ],
+          "paragraphStyle": {
+            "namedStyleType": "NORMAL_TEXT",
+            "direction": "LEFT_TO_RIGHT"
+          }
+        }
+      }
+    ]
+  }
+};
+
 /**
 *  On load, called to load the auth2 library and API client library.
 */
