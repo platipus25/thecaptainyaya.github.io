@@ -1,6 +1,8 @@
-// Gets the sign in/out button
+// Gets all HTML elements
 const authorizeButton = document.getElementById('authorize_button');
 const signoutButton = document.getElementById('signout_button');
+const textarea = document.getElementById('textarea');
+const submitButton = document.getElementById('submit_button');
 
 /**
 *  On load, called to load the auth2 library and API client library.
@@ -10,8 +12,7 @@ function handleClientLoad() {
 }
 
 /**
-*  Initializes the API client library and sets up sign-in state
-*  listeners.
+*  Initializes the API client library and sets up sign-in state listeners.
 */
 function initClient() {
 	gapi.client.init({
@@ -24,24 +25,26 @@ function initClient() {
 		gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
 		// Handle the initial sign-in state.
-		updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+		updateSigninStatus();
 		authorizeButton.onclick = handleAuthClick;
 		signoutButton.onclick = handleSignoutClick;
 	});
 }
 
 /**
-*  Called when the signed in status changes, to update the UI
-*  appropriately. After a sign-in, the API is called.
+*  Called when the signed in status changes, to update the UI appropriately. After a sign-in, the API is called.
 */
-function updateSigninStatus(isSignedIn) {
-	if (isSignedIn) {
+function updateSigninStatus() {
+	if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
 		authorizeButton.style.display = 'none';
 		signoutButton.style.display = 'block';
-		createDoc();
+		textarea.style.display = 'block';
+		submitButton.style.display = 'block';
 	} else {
 		authorizeButton.style.display = 'block';
 		signoutButton.style.display = 'none';
+		textarea.style.display = 'none';
+		submitButton.style.display = 'block';
 	}
 }
 
@@ -60,35 +63,29 @@ function handleSignoutClick(event) {
 }
 
 /**
-* Append a pre element to the body containing the given message
-* as its text node. Used to display the results of the API call.
-*
-* @param {string} message Text to be placed in pre element.
-*/
-function appendPre(message) {
-	let pre = document.getElementById('content');
-	let textContent = document.createTextNode(message + '\n');
-	pre.appendChild(textContent);
-}
-
-/**
 * Creates a document with the log
 */
 function createDoc() {
-	// Parses a variable from the template.js file
+	if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+		alert("Please sign in to use the feature");
+		window.location.reload(false);
+	}
 	let googleDoc = {"title": "title"};
 	let today = new Date();
 	let day = (today.getFullYear() - Math.floor(today.getFullYear() / 100) * 100) + "." + (today.getMonth() + 1) + "." + today.getDate();
 	googleDoc.title = "Daily Log - " + day;
 	gapi.client.docs.documents.create(googleDoc).then(response => {
+		// Gets the document ID of the newley created document
 		let googleDoc = response.result;
 		let params = {"documentId": "id"};
 		params.documentId = googleDoc.documentId;
+		
+		// Body of the request to batch update
 		let updateRequest = {
 			"requests": [
 				{
 					"insertText": {
-						"text": "\nhello world",
+						"text": "text",
 						"location": {
 							"index": 1,
 							"segmentId": ""
@@ -97,14 +94,17 @@ function createDoc() {
 				}
 			]
 		};
+		
+		//Sanatizes user input and adds it to the batch update
+		let input = "\n" + textarea.innerHTML.replace('"', '\\"').replace("'", "\\'").replace("\\", "\\\\");
+		updateRequest.requests[0].insertText.text = input;
+		
+		//Batch updates
 		gapi.client.docs.documents.batchUpdate(params, updateRequest).then(response => {
-			console.log(response.result);
+			console.log("Document sucessfully batch updated");
 		}, () => {
-				console.log("Error: " + response.result.error.message);
+			console.log("Error: " + response.result.error.message);
 		});
-		console.log("Successfully created " + googleDoc.title + ".");
-		console.log(googleDoc);
-		console.log(googleDoc.documentId);
 	}, response => {
 		console.log('Error: ' + response.result.error.message);
 	});

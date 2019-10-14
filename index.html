@@ -11,7 +11,8 @@
     <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize_button" style="display: none;">Authorize</button>
     <button id="signout_button" style="display: none;">Sign Out</button>
-    <pre id="content"></pre>
+	<textarea id="textarea" style="display: none;"></textarea>
+	<button id="submit_button" onclick="createDoc()" style="display: none;"></textarea>
     <script type="text/javascript" src="docs_api.js"></script>
     <script async="" defer="" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()" src="https://apis.google.com/js/api.js"></script>
   </body>
