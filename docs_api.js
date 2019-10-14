@@ -19,7 +19,7 @@ function initClient() {
 		apiKey: "AIzaSyAh7uT_LoX_U0LxWpEw0jGLCxTpUMQSIOs",
 		clientId: "233676235337-e4k8et9oj9p8d4pq6i89kbiifn5hmqe3.apps.googleusercontent.com",
 		discoveryDocs: ['https://docs.googleapis.com/$discovery/rest?version=v1'],
-		scope: "https://www.googleapis.com/auth/documents.readonly https://www.googleapis.com/auth/drive.file"
+		scope: "https://www.googleapis.com/auth/drive.file"
 	}).then(() => {
 		// Listen for sign-in state changes.
 		gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
