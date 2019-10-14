@@ -99,6 +99,8 @@ function createDoc() {
 		};
 		gapi.client.docs.documents.batchUpdate(params, updateRequest);
 		console.log("Successfully created " + googleDoc.title + ".");
+		console.log(googleDoc);
+		console.log(googleDoc.documentId);
 	}, response => {
 		console.log('Error: ' + response.result.error.message);
 	});
