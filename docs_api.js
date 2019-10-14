@@ -88,7 +88,7 @@ function createDoc() {
 			"requests": [
 				{
 					"insertText": {
-						"text": "hello world",
+						"text": "\nhello world",
 						"location": {
 							"index": 1,
 							"segmentId": ""
