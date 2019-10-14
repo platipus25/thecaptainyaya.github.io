@@ -1,8 +1,7 @@
-// Array of API discovery doc URLs for APIs used by the quickstart
+// Array of API discovery doc URLs for APIs
 const DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
 
-// Authorization scopes required by the API; multiple scopes can be
-// included, separated by spaces.
+// Gets the sign in/out button
 const authorizeButton = document.getElementById('authorize_button');
 const signoutButton = document.getElementById('signout_button');
 
@@ -80,24 +79,11 @@ function appendPre(message) {
 * https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
 */
 function printDocTitle() {
-	gapi.client.docs.documents.create({
-		"title": "test1",
-		"body": {
-			"content": [
-				{
-					"paragraph": {
-						"elements": [
-							{
-								"textRun": {
-									"content": "hello world"
-								}
-							}
-						]
-					}
-				}
-			]
-		}
-	}).then(function(response) {
+	// Parses a variable from the template.js file
+	let googleDoc = JSON.parse(template);
+	googleDoc.body.content[1].elements[0].textRun.content = "hello world\n";
+	googleDoc.title = "test2";
+	gapi.client.docs.documents.create(googleDoc).then(function(response) {
 		let doc = response.result;
 		let title = doc.title;
 		appendPre('Created "' + title + '" successfully');
