@@ -78,11 +78,13 @@ function createDoc() {
 	// Parses a variable from the template.js file
 	let googleDoc = {"title": "title"};
 	let today = new Date();
-	googleDoc.title = "Daily Log - " + Math.floor(today.getFullYear() / 100) + "." + (today.getMonth() + 1) + "." + today.getDate();
+	let day = (today.getFullYear() - Math.floor(today.getFullYear() / 100) * 100) + "." + (today.getMonth() + 1) + "." + today.getDate();
+	googleDoc.title = "Daily Log - " + day;
 	gapi.client.docs.documents.create(googleDoc).then(response => {
 		let googleDoc = response.result;
+		let params = {"documentId": "id"};
+		params.documentId = googleDoc.documentId;
 		let updateRequest = {
-			documentId = "id",
 			"requests": [
 				{
 					"insertText": {
@@ -95,8 +97,7 @@ function createDoc() {
 				}
 			]
 		};
-		updateRequest.documentId = googleDoc.documentId;
-		gapi.client.docs.documents.batchUpdate(updateRequest);
+		gapi.client.docs.documents.batchUpdate(params, updateRequest);
 		console.log("Successfully created " + googleDoc.title + ".");
 	}, response => {
 		console.log('Error: ' + response.result.error.message);
