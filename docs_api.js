@@ -28,7 +28,7 @@ const template = {
               "startIndex": 1,
               "endIndex": 2,
               "textRun": {
-                "content": "\n",
+                "content": "hello world\n",
                 "textStyle": {}
               }
             }
