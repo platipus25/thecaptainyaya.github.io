@@ -95,16 +95,19 @@ function createDoc() {
 			]
 		};
 		
-		//Sanatizes user input and adds it to the batch update
-		let input = "\n" + textarea.innerHTML.replace('"', '\\"').replace("'", "\\'").replace("\\", "\\\\");
+		// Sanatizes user input and adds it to the batch update
+		let input = "\n" + textarea.value.replace('"', '\\"').replace("'", "\\'").replace("\\", "\\\\");
 		updateRequest.requests[0].insertText.text = input;
 		
-		//Batch updates
+		// Batch updates
 		gapi.client.docs.documents.batchUpdate(params, updateRequest).then(response => {
 			console.log("Document sucessfully batch updated");
 		}, () => {
 			console.log("Error: " + response.result.error.message);
 		});
+		
+		// Resets the textarea
+		textarea.value = "";
 	}, response => {
 		console.log('Error: ' + response.result.error.message);
 	});
