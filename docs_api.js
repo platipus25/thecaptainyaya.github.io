@@ -99,15 +99,15 @@ function createDoc() {
 		let input = "\n" + textarea.value.replace("\\", "\\\\").replace('"', '\\\"').replace("'", "\\\'");
 		updateRequest.requests[0].insertText.text = input;
 		
+		// Resets the textarea
+		textarea.value = "";
+		
 		// Batch updates
 		gapi.client.docs.documents.batchUpdate(params, updateRequest).then(response => {
 			console.log("Document sucessfully batch updated");
 		}, () => {
 			console.log("Error: " + response.result.error.message);
 		});
-		
-		// Resets the textarea
-		textarea.value = "";
 	}, response => {
 		console.log('Error: ' + response.result.error.message);
 	});
