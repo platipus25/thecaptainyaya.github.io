@@ -70,14 +70,29 @@ function createDoc() {
 		alert("Please sign in to use the feature");
 		window.location.reload(false);
 	}
-	//Searches for an application specific folder
-		gapi.client.drive.files.list({
-			"q": "name = 'Daily Logs' and mimeType = 'application/vnd.google-apps.folder'"
-			}).then(response => {
-				console.log("Response", response);
-			}, err => { 
-				console.error("Execute error", err); 
+	
+	//Searches for a folder to put the logs in. If none exist, it will create one
+	const folderId;
+	gapi.client.drive.files.list({
+		"q": "name = 'Daily Logs' and mimeType = 'application/vnd.google-apps.folder'"
+	}).then(response => {
+		console.log("Response", response);
+		try {
+			folderId = response.files[0].id;
+		} catch(error) {
+			gapi.client.drive.files.create({
+				"mimeType": "application/vnd.google-apps.folder",
+				"name": "Daily Logs"
+			}).then(response1 => {
+				folderId = response1.id;
+			}, err => {
+				console.error("Execute error", err);
 			});
+		}
+	}, err => { 
+		console.error("Execute error", err);
+	});
+	console.log(folderId);
 	
 	//Creates the google doc
 	let googleDoc = {"title": "title"};
