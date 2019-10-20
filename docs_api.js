@@ -72,7 +72,7 @@ function createDoc() {
 	}
 	
 	//Searches for a folder to put the logs in. If none exist, it will create one
-	const folderId;
+	let folderId;
 	gapi.client.drive.files.list({
 		"q": "name = 'Daily Logs' and mimeType = 'application/vnd.google-apps.folder'"
 	}).then(response => {
