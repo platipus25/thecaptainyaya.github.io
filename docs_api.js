@@ -18,8 +18,8 @@ function initClient() {
 	gapi.client.init({
 		apiKey: "AIzaSyAh7uT_LoX_U0LxWpEw0jGLCxTpUMQSIOs",
 		clientId: "233676235337-e4k8et9oj9p8d4pq6i89kbiifn5hmqe3.apps.googleusercontent.com",
-		discoveryDocs: ['https://docs.googleapis.com/$discovery/rest?version=v1'],
-		scope: "https://www.googleapis.com/auth/drive.file"
+		discoveryDocs: ["https://docs.googleapis.com/$discovery/rest?version=v1", "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+		scope: "https://www.googleapis.com/auth/drive.file, https://www.googleapis.com/auth/drive.appdata"
 	}).then(() => {
 		// Listen for sign-in state changes.
 		gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
@@ -70,6 +70,16 @@ function createDoc() {
 		alert("Please sign in to use the feature");
 		window.location.reload(false);
 	}
+	//Searches for an application specific folder
+		gapi.client.drive.files.list({
+			"q": "name = 'Daily Logs' and mimeType = 'application/vnd.google-apps.folder'"
+			}).then(response => {
+				console.log("Response", response);
+			}, err => { 
+				console.error("Execute error", err); 
+			});
+	
+	//Creates the google doc
 	let googleDoc = {"title": "title"};
 	let today = new Date();
 	let day = (today.getFullYear() - Math.floor(today.getFullYear() / 100) * 100) + "." + (today.getMonth() + 1) + "." + today.getDate();
