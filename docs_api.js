@@ -131,7 +131,7 @@ function createDoc() {
 		"requests": [
 			{
 				"insertText": {
-					"text": "\n" + textarea.value.replace("\\", "\\\\").replace('"', '\\\"').replace("'", "\\\'");,
+					"text": "\n" + textarea.value.replace("\\", "\\\\").replace('"', '\\\"').replace("'", "\\\'"),
 					"location": {
 						"index": 1,
 						"segmentId": ""
