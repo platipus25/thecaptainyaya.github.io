@@ -97,45 +97,57 @@ function createDoc() {
 	console.log(folderId);
 	
 	//Creates the google doc
-	let googleDoc = {"title": "title"};
-	let today = new Date();
-	let day = (today.getFullYear() - Math.floor(today.getFullYear() / 100) * 100) + "." + (today.getMonth() + 1) + "." + today.getDate();
-	googleDoc.title = "Daily Log - " + day;
-	gapi.client.docs.documents.create(googleDoc).then(response => {
-		// Gets the document ID of the newley created document
-		let googleDoc = response.result;
-		let params = {"documentId": "id"};
-		params.documentId = googleDoc.documentId;
-		
-		// Body of the request to batch update
-		let updateRequest = {
-			"requests": [
-				{
-					"insertText": {
-						"text": "text",
-						"location": {
-							"index": 1,
-							"segmentId": ""
-						}
+	const today = new Date();
+	const date = (today.getFullYear() - Math.floor(today.getFullYear() / 100) * 100) + "." + (today.getMonth() + 1) + "." + today.getDate();
+	const title = "Daily Log - " + date;
+	let documentId;
+	
+	const searchQuery = "name = '" + title + "' and mimeType = 'application/vnd.google-apps.document' and '" + folderId + "' in parents";
+	gapi.client.drive.files.list({
+		"q": searchQuery
+	}).then(response => {
+		console.log("Response", response);
+		if (response.result.files.length != 0) {
+			documentId = response.result.files[0].id;
+			console.log("i found it");
+		} else {
+			console.log("i didnt find it");
+			gapi.client.drive.files.create({
+				"mimeType": "application/vnd.google-apps.document",
+				"name": title
+			}).then(response1 => {
+				documentId = response1.id;
+			}, err => {
+				console.error("Execute error", err);
+			});
+		}
+	}, err => { 
+		console.error("Execute error", err);
+	});
+	const params = {"documentId": documentId};
+	
+	// Body of the request to batch update
+	let updateRequest = {
+		"requests": [
+			{
+				"insertText": {
+					"text": "\n" + textarea.value.replace("\\", "\\\\").replace('"', '\\\"').replace("'", "\\\'");,
+					"location": {
+						"index": 1,
+						"segmentId": ""
 					}
 				}
-			]
-		};
-		
-		// Sanatizes user input and adds it to the batch update
-		let input = "\n" + textarea.value.replace("\\", "\\\\").replace('"', '\\\"').replace("'", "\\\'");
-		updateRequest.requests[0].insertText.text = input;
-		
-		// Resets the textarea
-		textarea.value = "";
-		
-		// Batch updates
-		gapi.client.docs.documents.batchUpdate(params, updateRequest).then(response => {
-			console.log("Document sucessfully batch updated");
-		}, () => {
-			console.log("Error: " + response.result.error.message);
-		});
-	}, response => {
-		console.log('Error: ' + response.result.error.message);
+			}
+		]
+	};
+	
+	// Resets the textarea
+	textarea.value = "";
+	
+	// Batch updates
+	gapi.client.docs.documents.batchUpdate(params, updateRequest).then(response => {
+		console.log("Document sucessfully batch updated");
+	}, () => {
+		console.log("Error: " + response.result.error.message);
 	});
 }
