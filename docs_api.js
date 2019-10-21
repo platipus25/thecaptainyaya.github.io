@@ -77,10 +77,10 @@ function createDoc() {
 		"q": "name = 'Daily Logs' and mimeType = 'application/vnd.google-apps.folder'"
 	}).then(response => {
 		console.log("Response", response);
-		try {
+		if (response.result.files[0].length != 0) {
 			folderId = response.result.files[0].id;
 			console.log("i found it");
-		} catch(error) {
+		} else {
 			console.log("i didnt find it");
 			gapi.client.drive.files.create({
 				"mimeType": "application/vnd.google-apps.folder",
